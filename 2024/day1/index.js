@@ -10,9 +10,10 @@ const calculateDistance = (filePath) => {
   const rightNumbers = [];
 
   fileContent.split("\n").forEach((line, index) => {
-    if (line.trim() === "") return;
+    const trimmedLine = line.trim();
+    if (trimmedLine === "") return;
 
-    const [leftNumber, rightNumber] = line.trim().split(/\s+/).map(Number);
+    const [leftNumber, rightNumber] = trimmedLine.split(/\s+/).map(Number);
 
     leftNumbers.push({ value: leftNumber, index });
     rightNumbers.push({ value: rightNumber, index });
@@ -40,9 +41,10 @@ const calculateSimilarityScore = (filePath) => {
   const rightNumbersCount = {};
 
   fileContent.split("\n").forEach((line) => {
-    if (line.trim() === "") return;
+    const trimmedLine = line.trim();
+    if (trimmedLine === "") return;
 
-    const [leftNumber, rightNumber] = line.trim().split(/\s+/).map(Number);
+    const [leftNumber, rightNumber] = trimmedLine.split(/\s+/).map(Number);
 
     leftNumbers.push(leftNumber);
     rightNumbersCount[rightNumber] = (rightNumbersCount[rightNumber] || 0) + 1;
