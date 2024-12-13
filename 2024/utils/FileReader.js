@@ -20,7 +20,7 @@ class FileReader {
    * whitespace from the ends of each line.
    * @returns {string[]} An array of lines from the file.
    */
-  splitLines() {
+  asLines() {
     return this.fileContent.split("\n").map((line) => line.trim());
   }
   /**
@@ -29,7 +29,7 @@ class FileReader {
    * @returns {string[][]} A 2D array of characters from the file.
    */
   asGrid() {
-    return this.splitLines().map((line) => line.split(""));
+    return this.asLines().map((line) => line.split(""));
   }
 }
 
