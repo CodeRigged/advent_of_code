@@ -2,9 +2,7 @@ const { allCardinalDirections } = require("../utils/constants");
 const FileReader = require("../utils/FileReader");
 
 const fileReader = new FileReader();
-const grid = fileReader.asGrid();
-const numRows = grid.length;
-const numCols = grid[0].length;
+const { grid, height, width } = fileReader.asGrid();
 
 /** day 4 part 1 */
 // Helper function to check if the word exists starting from (x, y) in direction (dx, dy)
@@ -17,10 +15,7 @@ const isWordAtPosition = (x, y, dx, dy, word, grid) => {
 
     // Boundary check
     if (
-      nx < 0 ||
-      ny < 0 ||
-      nx >= numRows ||
-      ny >= numCols ||
+      FileReader.isOutOfBounds(nx, ny, height, width) ||
       grid[nx][ny] !== word[i]
     ) {
       return false;
@@ -33,8 +28,8 @@ const countWordAppearence = (word) => {
   let count = 0;
 
   // iterate over the grid
-  for (let row = 0; row < numRows; row++) {
-    for (let col = 0; col < numCols; col++) {
+  for (let row = 0; row < height; row++) {
+    for (let col = 0; col < width; col++) {
       // iterate over all the directions
       for (const { dx, dy } of allCardinalDirections) {
         if (isWordAtPosition(row, col, dx, dy, word, grid)) {
@@ -63,7 +58,7 @@ const isXAtPosition = (x, y, xMap, centerChar, word, wordInReverse, grid) => {
   for (const { dx, dy } of xMap) {
     const nx = x + dx;
     const ny = y + dy;
-    if (nx < 0 || ny < 0 || nx >= numRows || ny >= numCols || !grid[nx][ny]) {
+    if (nx < 0 || ny < 0 || nx >= height || ny >= width || !grid[nx][ny]) {
       return false;
     }
 
@@ -110,8 +105,8 @@ const countWordAppearenceAsX = (word) => {
   });
 
   let count = 0;
-  for (let row = 0; row < numRows; row++) {
-    for (let col = 0; col < numCols; col++) {
+  for (let row = 0; row < height; row++) {
+    for (let col = 0; col < width; col++) {
       if (
         isXAtPosition(row, col, xMap, centerChar, word, wordInReverse, grid)
       ) {

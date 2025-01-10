@@ -2,14 +2,10 @@ const { mainCardinalDirections } = require("../utils/constants");
 const FileReader = require("../utils/FileReader");
 
 const fileReader = new FileReader();
-const topographicMap = fileReader.asGrid();
-const numRows = topographicMap.length;
-const numCols = topographicMap[0].length;
+const { grid: topographicMap, height, width } = fileReader.asGrid();
 
 const startOfTrail = 0;
 const endOfTrail = 9;
-
-const isOutOfBounds = (y, x) => x < 0 || y < 0 || y >= numRows || x >= numCols;
 
 /** Day 10 */
 
@@ -19,7 +15,7 @@ const countTrails = (
   countDistinctTrails,
   visited = new Set()
 ) => {
-  if (isOutOfBounds(currentY, currentX)) return 0;
+  if (FileReader.isOutOfBounds(currentY, currentX, height, width)) return 0;
 
   const currentHeight = Number(topographicMap[currentY][currentX]);
 
@@ -45,7 +41,7 @@ const countTrails = (
     const nextX = currentX + dx;
 
     // Check if the next position is within bounds and is a valid step
-    if (!isOutOfBounds(nextY, nextX)) {
+    if (!FileReader.isOutOfBounds(nextY, nextX, height, width)) {
       const nextHeight = Number(topographicMap[nextY][nextX]);
 
       // Check if the next step follows the gradual uphill rule
@@ -63,8 +59,8 @@ const countTrails = (
 
 const getSumOfTrailheads = (countDistinctTrails = false) => {
   let sumOfTrailheads = 0;
-  for (let y = 0; y < numRows; y++) {
-    for (let x = 0; x < numCols; x++) {
+  for (let y = 0; y < height; y++) {
+    for (let x = 0; x < width; x++) {
       if (Number(topographicMap[y][x]) === startOfTrail) {
         const trailheadsFoundForTrail = countTrails(y, x, countDistinctTrails);
         sumOfTrailheads += trailheadsFoundForTrail;

@@ -1,26 +1,19 @@
-const { mainCardinalDirections } = require("../utils/constants");
+const { allCardinalDirections } = require("../utils/constants");
 const FileReader = require("../utils/FileReader");
 
 const fileReader = new FileReader();
-const grid = fileReader.asGrid();
-const numRows = grid.length;
-const numCols = grid[0].length;
+const { grid, height, width } = fileReader.asGrid();
 
-/** day 6 part 1 */
+/** day 6 part 1 INCOMPLETE */
 const getDistinctPositions = () => {
   let distinctPositions = 0;
   let positionY = grid.findIndex((row) => row.includes("^"));
   let positionX = grid[positionY].findIndex((col) => col === "^");
   let currentDirectionIndex = 0;
 
-  while (
-    numRows >= positionY &&
-    numCols >= positionX &&
-    positionY >= 0 &&
-    positionX >= 0
-  ) {
+  while (!FileReader.isOutOfBounds(positionY, positionX, height, width)) {
     // current direction
-    const { dx, dy } = mainCardinalDirections[currentDirectionIndex];
+    const { dx, dy } = allCardinalDirections[currentDirectionIndex];
 
     // if not visited yet, increase distinct positions
     if (grid[positionY][positionX] !== "X") distinctPositions++;
@@ -37,7 +30,7 @@ const getDistinctPositions = () => {
       positionY -= dy;
       positionX -= dx;
       currentDirectionIndex =
-        (currentDirectionIndex + 1) % mainCardinalDirections.length;
+        (currentDirectionIndex + 1) % allCardinalDirections.length;
     }
   }
 

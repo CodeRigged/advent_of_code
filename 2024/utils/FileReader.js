@@ -29,8 +29,12 @@ class FileReader {
    * @returns {string[][]} A 2D array of characters from the file.
    */
   asGrid() {
-    return this.asLines().map((line) => line.split(""));
+    const grid = this.asLines().map((line) => line.split(""));
+    return { grid, height: grid.length, width: grid[0].length };
   }
+
+  static isOutOfBounds = (y, x, height, width) =>
+    x < 0 || y < 0 || y >= height || x >= width;
 }
 
 module.exports = FileReader;
