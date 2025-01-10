@@ -74,4 +74,9 @@ const computeFilesystemChecksumV2 = (fileContent) => {
 };
 
 const fileContent = new FileReader().fileContent;
-console.log(computeFilesystemChecksumV2(fileContent));
+console.log(
+  `The checksum for part 1 is ${computeFilesystemChecksum(fileContent)}.`
+);
+console.log(
+  `The checksum for part 2 is ${computeFilesystemChecksumV2(fileContent)}.`
+);

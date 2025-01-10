@@ -1,3 +1,4 @@
+const { allCardinalDirections } = require("../utils/constants");
 const FileReader = require("../utils/FileReader");
 
 const fileReader = new FileReader();
@@ -29,24 +30,13 @@ const isWordAtPosition = (x, y, dx, dy, word, grid) => {
 };
 
 const countWordAppearence = (word) => {
-  const directions = [
-    { dx: -1, dy: 0 }, // west
-    { dx: 1, dy: 0 }, // east
-    { dx: 0, dy: -1 }, // north
-    { dx: 0, dy: 1 }, // south
-    { dx: -1, dy: -1 }, // northwest
-    { dx: 1, dy: -1 }, // northeast
-    { dx: -1, dy: 1 }, // southwest
-    { dx: 1, dy: 1 }, // southeast
-  ];
-
   let count = 0;
 
   // iterate over the grid
   for (let row = 0; row < numRows; row++) {
     for (let col = 0; col < numCols; col++) {
-      // iterate over the directions
-      for (const { dx, dy } of directions) {
+      // iterate over all the directions
+      for (const { dx, dy } of allCardinalDirections) {
         if (isWordAtPosition(row, col, dx, dy, word, grid)) {
           count++;
         }
